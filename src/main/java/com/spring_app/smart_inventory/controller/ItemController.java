@@ -2,11 +2,13 @@ package com.spring_app.smart_inventory.controller;
 
 import com.spring_app.smart_inventory.dto.ItemDTO;
 import com.spring_app.smart_inventory.service.ItemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-
+@Tag(name="SmartInventory API", description = "This is an API for the CRUD operations of the Items in the DB")
 @RestController
 @RequestMapping("items")
 public class ItemController {
@@ -15,6 +17,7 @@ public class ItemController {
     public ItemController(ItemService itemService){
         this.itemService = itemService;
     }
+    @Operation(summary = "Read Item", description = "Retrives an item from the DB based on the id.")
     @GetMapping("{id}")
     public ItemDTO getItem(@PathVariable UUID id){
         return itemService.get(id);
