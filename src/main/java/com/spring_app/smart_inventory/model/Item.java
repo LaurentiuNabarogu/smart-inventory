@@ -10,22 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name="items")
 public class Item {
-    protected Item(){
-//        Hibernate needed.
-    }
-    public Item(String name,
-                String description,
-                Category category,
-                String serialNumber,
-                ItemStatus status)
-    {
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.serialNumber = serialNumber;
-        this.status = status;
 
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -51,6 +36,19 @@ public class Item {
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private Instant createdAt;
+
+    protected Item(){
+//        Hibernate needed.
+    }
+
+    public Item(String name, String description, Category category, Location location, String serialNumber, ItemStatus status) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.location = location;
+        this.serialNumber = serialNumber;
+        this.status = status;
+    }
 
     public UUID getId() {
         return id;
@@ -106,6 +104,10 @@ public class Item {
 
     public void setStatus(ItemStatus status) {
         this.status = status;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
 }

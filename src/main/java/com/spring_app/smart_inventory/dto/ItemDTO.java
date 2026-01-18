@@ -2,8 +2,6 @@ package com.spring_app.smart_inventory.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.spring_app.smart_inventory.enums.ItemStatus;
-import jakarta.persistence.Column;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 import java.util.UUID;

@@ -17,10 +17,10 @@ public class ItemController {
     public ItemController(ItemService itemService){
         this.itemService = itemService;
     }
-    @Operation(summary = "Read Item", description = "Retrives an item from the DB based on the id.")
+    @Operation(summary = "Read Item", description = "Retrieves an item from the DB based on the id.")
     @GetMapping("{id}")
     public ItemDTO getItem(@PathVariable UUID id){
-        return itemService.get(id);
+        return itemService.getById(id);
     }
     @PostMapping
     public ItemDTO createItem(@RequestBody ItemDTO itemDTO) {
@@ -36,6 +36,6 @@ public class ItemController {
     }
     @GetMapping
     public List<ItemDTO> getItems() {
-        return itemService.getAllItems();
+        return itemService.getAll();
     }
 }

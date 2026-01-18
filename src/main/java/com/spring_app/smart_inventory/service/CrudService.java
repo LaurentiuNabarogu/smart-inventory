@@ -3,6 +3,9 @@ package com.spring_app.smart_inventory.service;
 import java.util.List;
 
 public interface CrudService<D, ID> {
+    /*D = DTO
+      ID = UUID
+     */
     D create(D dto);
     D getById(ID id);
     D update(ID id, D dto);
