@@ -1,6 +1,8 @@
 package com.spring_app.smart_inventory.util;
 
+import com.spring_app.smart_inventory.dto.CategoryDTO;
 import com.spring_app.smart_inventory.dto.ItemDTO;
+import com.spring_app.smart_inventory.dto.LocationDTO;
 import com.spring_app.smart_inventory.model.Category;
 import com.spring_app.smart_inventory.model.Item;
 import com.spring_app.smart_inventory.model.Location;
@@ -30,5 +32,13 @@ public class ModelConvertor {
                 dto.status()
         );
     }
-
+    public static CategoryDTO toCategoryDTO(Category category){
+        return new CategoryDTO(
+                category.getId(),
+                category.getName()
+        );
+    }
+    public static LocationDTO toLocationDTO(Location location) {
+        return new LocationDTO(location.getId(), location.getName(), location.getType());
+    }
 }

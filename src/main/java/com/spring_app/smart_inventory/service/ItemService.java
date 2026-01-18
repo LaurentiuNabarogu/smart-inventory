@@ -2,7 +2,6 @@ package com.spring_app.smart_inventory.service;
 
 import com.spring_app.smart_inventory.dto.ItemDTO;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface ItemService extends CrudService<ItemDTO, UUID>{
