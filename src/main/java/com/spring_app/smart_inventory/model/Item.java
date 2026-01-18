@@ -1,5 +1,6 @@
 package com.spring_app.smart_inventory.model;
 
+import com.spring_app.smart_inventory.enums.ItemStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -12,12 +13,18 @@ public class Item {
     protected Item(){
 //        Hibernate needed.
     }
-    public Item(String name, String description, UUID categoryId, String serialNumber, Instant createdAt) {
+    public Item(String name,
+                String description,
+                Category category,
+                String serialNumber,
+                ItemStatus status)
+    {
         this.name = name;
         this.description = description;
-        this.categoryId = categoryId;
+        this.category = category;
         this.serialNumber = serialNumber;
-        this.createdAt = createdAt;
+        this.status = status;
+
     }
 
     @Id
@@ -26,11 +33,20 @@ public class Item {
     private UUID id;
     private String name;
     private String description;
-    @Column(name = "category_id")
-    private UUID categoryId;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
     @Column(name ="serial_number")
     private String serialNumber;
+
+    @Enumerated(EnumType.STRING)
+    private ItemStatus status;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -60,12 +76,20 @@ public class Item {
         this.description = description;
     }
 
-    public UUID getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(UUID categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public String getSerialNumber() {
@@ -76,11 +100,12 @@ public class Item {
         this.serialNumber = serialNumber;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public ItemStatus getStatus() {
+        return status;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public void setStatus(ItemStatus status) {
+        this.status = status;
     }
+
 }
