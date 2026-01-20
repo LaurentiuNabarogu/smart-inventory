@@ -10,7 +10,10 @@ import com.spring_app.smart_inventory.repository.LocationRepository;
 import com.spring_app.smart_inventory.service.ItemService;
 import com.spring_app.smart_inventory.util.ModelConvertor;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.UUID;
 @Service
@@ -82,6 +85,35 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDTO> getAll() {
         List<Item> allItems = itemRepository.findAll();
         return allItems.stream().map(ModelConvertor::toItemDTO).toList();
+    }
+
+    @Override
+    public List<ItemDTO> getByCategoryName(String categoryName) {
+        return itemRepository.findByCategoryNameContainingIgnoreCase(categoryName)
+                .stream()
+                .map(ModelConvertor::toItemDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ItemDTO> getByLocationName(String locationName) {
+        return itemRepository.findByLocationNameContainingIgnoreCase(locationName)
+                .stream()
+                .map(ModelConvertor::toItemDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ItemDTO> getByCategoryName_LocationNameContainingIgnoreCase(String categoryName, String locationName) {
+
+        List<ItemDTO> result = itemRepository.findByCategoryNameContainingIgnoreCaseAndLocationNameContainingIgnoreCase(categoryName, locationName)
+                    .stream()
+                    .map(ModelConvertor::toItemDTO)
+                    .toList();
+        if(result.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No items found for the given filters");
+        }
+            return result;
     }
 
 }
